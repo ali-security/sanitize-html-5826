@@ -30,7 +30,7 @@
     "klona": "^2.0.3",
     "parse-srcset": "^1.0.2",
     "postcss": "^8.0.2"
-  },
+  }, 
   "devDependencies": {
     "eslint": "^7.3.1",
     "eslint-config-apostrophe": "^3.4.0",
@@ -43,3 +43,4 @@
     "sinon": "^9.0.2"
   }
 }
+
