@@ -1355,3 +1355,11 @@ describe('sanitizeHtml', function() {
   });
 
 });
+  it('should not process style sourceMappingURL with postCSS', () => {
+    assert.equal(sanitizeHtml('<a style=\'background-image: url("/*# sourceMappingURL=../index.js */");\'></a>', {
+      allowedAttributes: {
+        ...sanitizeHtml.defaults.allowedAttributes,
+        a: [ 'style' ]
+      }
+    }), '<a style="background-image:url(&quot;/*# sourceMappingURL=../index.js */&quot;)"></a>');
+  });

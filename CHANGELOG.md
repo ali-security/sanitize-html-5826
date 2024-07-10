@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.7.1 (2022-07-20)
+
+- Protocol-relative URLs are properly supported for script tags. Thanks to [paweljq](https://github.com/paweljq).
+- A denial-of-service vulnerability has been fixed by replacing global regular expression replacement logic for comment removal with a new implementation. Thanks to Nariyoshi Chida of NTT Security Japan for pointing out the issue.
+
 ## 2.4.0 (2021-05-19):
 - Added support for class names with wildcards in `allowedClasses`. Thanks to [zhangbenber](https://github.com/zhangbenber) for the contribution.
 
