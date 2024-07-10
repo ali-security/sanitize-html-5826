@@ -4,7 +4,7 @@ const { klona } = require('klona');
 const { isPlainObject } = require('is-plain-object');
 const deepmerge = require('deepmerge');
 const parseSrcset = require('parse-srcset');
-const abstractSyntaxTree = postcssParse(name + ' {' + value + '}', { map: false });
+const { parse: postcssParse } = require('postcss');
 // Tags that can conceivably represent stand-alone media.
 const mediaTags = [
   'img', 'audio', 'video', 'picture', 'svg',
@@ -412,7 +412,7 @@ function sanitizeHtml(html, options, _recursing) {
             }
             if (a === 'style') {
               try {
-                const abstractSyntaxTree = postcssParse(name + ' {' + value + '}');
+                const abstractSyntaxTree = postcssParse(name + ' {' + value + '}', { map: false });
                 const filteredAST = filterCss(abstractSyntaxTree, options.allowedStyles);
 
                 value = stringifyStyleAttributes(filteredAST);
@@ -587,17 +587,7 @@ function sanitizeHtml(html, options, _recursing) {
     // Clobber any comments in URLs, which the browser might
     // interpret inside an XML data island, allowing
     // a javascript: URL to be snuck through
-    while (true) {
-      const firstIndex = href.indexOf('<!--');
-      if (firstIndex === -1) {
-        break;
-      }
-      const lastIndex = href.indexOf('-->', firstIndex + 4);
-      if (lastIndex === -1) {
-        break;
-      }
-      href = href.substring(0, firstIndex) + href.substring(lastIndex + 3);
-    }
+    href = href.replace(/<!--.*?-->/g, '');
     // Case insensitive so we don't get faked out by JAVASCRIPT #1
     // Allow more characters after the first so we don't get faked
     // out by certain schemes browsers accept
